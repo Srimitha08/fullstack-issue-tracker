@@ -29,6 +29,18 @@ app.use('/api/comments', require('./routes/commentRoutes'));
 app.use('/api/sync', require('./routes/syncRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
 
+// Root route - simple JSON response so GET / doesn't return 'Cannot GET /'
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Backend API is running',
+    endpoints: {
+      health: '/health',
+      api_root: '/api'
+    }
+  });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.status(200).json({
